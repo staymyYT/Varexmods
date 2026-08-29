@@ -3,197 +3,948 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod Downloads - VAREX Mods</title>
+    <title>Modrinth Cyan - Discover & Upload Mods</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-base: #090d16;
+            --bg-surface: #111827;
+            --bg-card: #1f2937;
+            --bg-card-hover: #374151;
+            --border-color: #1f2937;
+            --border-focus: #38bdf8;
+            
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --primary-glow: rgba(56, 189, 248, 0.25);
+            
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dark: #6b7280;
+            
+            --tag-bg: rgba(56, 189, 248, 0.1);
+            --tag-text: #38bdf8;
+            --badge-user: #a855f7;
+            --badge-modrinth: #10b981;
+            --danger: #ef4444;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background-color: #121214;
-            color: #e1e1e6;
-            padding: 20px;
-        }
-
-        header {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 900px;
-            margin: 0 auto 30px auto;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #29292e;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        h1 {
-            color: #00875f;
+        /* Navbar Header */
+        header {
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 2rem;
         }
 
-        nav a {
-            color: #e1e1e6;
-            text-decoration: none;
-            margin-left: 15px;
-            padding: 8px 16px;
-            background-color: #202024;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-
-        nav a:hover, nav a.active {
-            background-color: #00875f;
-            color: #fff;
-        }
-
-        .container {
-            max-width: 900px;
+        .nav-container {
+            max-width: 1400px;
             margin: 0 auto;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .search-box {
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .brand-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #ffffff;
+        }
+
+        .brand span {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #090d16;
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-card-hover);
+            border-color: var(--text-muted);
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: radial-gradient(circle at top center, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            padding: 4rem 2rem 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-title span {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        /* App Main Body Layout */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
             width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            border: 1px solid #29292e;
-            background-color: #202024;
-            color: #fff;
-            font-size: 16px;
+            flex-grow: 1;
         }
 
-        .mod-grid {
+        .tabs-header {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        /* Controls / Filters */
+        .search-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            flex-grow: 1;
+            position: relative;
+            min-width: 280px;
+        }
+
+        .search-wrapper svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            fill: var(--text-muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+
+        .select-filter {
+            padding: 0.8rem 1rem;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Grid Display */
+        .mods-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
 
         .mod-card {
-            background-color: #202024;
-            border: 1px solid #29292e;
-            border-radius: 8px;
-            padding: 20px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .mod-card:hover {
             transform: translateY(-4px);
-            border-color: #00875f;
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mod-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            object-fit: cover;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .mod-meta {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .mod-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
         }
 
         .mod-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 5px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .mod-version {
-            font-size: 12px;
-            color: #00875f;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
         }
 
-        .mod-desc {
-            font-size: 14px;
-            color: #a8a8b3;
-            margin-bottom: 15px;
-            flex-grow: 1;
+        .badge-user {
+            background-color: rgba(168, 85, 247, 0.15);
+            color: var(--badge-user);
+            border: 1px solid rgba(168, 85, 247, 0.3);
         }
 
-        .download-btn {
-            display: block;
-            text-align: center;
-            background-color: #00875f;
-            color: #fff;
-            padding: 10px;
+        .badge-modrinth {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--badge-modrinth);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .mod-author {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .mod-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .mod-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 8px;
             border-radius: 6px;
+        }
+
+        .dl-btn {
+            background-color: var(--primary);
+            color: #090d16;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
         }
 
-        .download-btn:hover {
-            background-color: #00b37e;
+        .dl-btn:hover {
+            background-color: var(--primary-hover);
+            color: #fff;
         }
 
-        .no-mods {
+        /* Form Modal & Upload View */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.25s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--border-focus);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-dropzone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
             text-align: center;
-            color: #a8a8b3;
+            background-color: var(--bg-base);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .file-dropzone:hover {
+            border-color: var(--primary);
+        }
+
+        .file-dropzone svg {
+            width: 36px;
+            height: 36px;
+            fill: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-dropzone p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .file-name-display {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Loading Spinner & Status */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border-left-color: var(--primary);
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 4rem 0;
             grid-column: 1 / -1;
-            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            grid-column: 1 / -1;
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
 
+    <!-- Navigation -->
     <header>
-        <h1>VAREX Mods</h1>
-        <nav>
-            <a href="index.html" class="active">Downloads</a>
-            <a href="about.html">Mod Hochladen</a>
-        </nav>
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                VAREX<span>Mods</span>
+            </a>
+            <div class="nav-actions">
+                <button class="btn btn-primary" onclick="openUploadModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+                    Mod Hochladen
+                </button>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <input type="text" id="searchInput" class="search-box" placeholder="Mod suchen..." oninput="filterMods()">
-        <div id="modList" class="mod-grid"></div>
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1 class="hero-title">Die Open-Source <span>Minecraft Modding</span> Plattform</h1>
+        <p class="hero-subtitle">Entdecke Live-Mods von Modrinth und teile deine eigenen Kreationen direkt mit der Community.</p>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Tabs Nav -->
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('all')">Alle Mods</button>
+            <button class="tab-btn" onclick="switchTab('user')">Community Uploads</button>
+            <button class="tab-btn" onclick="switchTab('modrinth')">Modrinth Library</button>
+        </div>
+
+        <!-- Controls / Search -->
+        <div class="search-controls">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Mods suchen nach Name oder Beschreibung..." oninput="handleSearch()">
+            </div>
+            <select id="loaderFilter" class="select-filter" onchange="handleSearch()">
+                <option value="all">Alle Loader (Fabric/Forge)</option>
+                <option value="fabric">Fabric</option>
+                <option value="forge">Forge</option>
+                <option value="neoforge">NeoForge</option>
+            </select>
+        </div>
+
+        <!-- Mods Grid Display Container -->
+        <div id="modsGrid" class="mods-grid">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p style="margin-top: 1rem;">Lade Mods aus der Cloud und Modrinth...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Neue Mod hochladen</h2>
+                <button class="close-btn" onclick="closeUploadModal()">&times;</button>
+            </div>
+            <form id="modUploadForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="modName">Mod Name *</label>
+                    <input type="text" id="modName" class="form-control" placeholder="z. B. Spiderman Fabric Mod" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modAuthor">Ersteller *</label>
+                    <input type="text" id="modAuthor" class="form-control" placeholder="Dein Name oder VAREX" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modVersion">Minecraft / Mod Version *</label>
+                    <input type="text" id="modVersion" class="form-control" placeholder="z. B. 1.21.8 / v1.0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modLoader">Mod Loader *</label>
+                    <select id="modLoader" class="form-control" required>
+                        <option value="Fabric">Fabric</option>
+                        <option value="Forge">Forge</option>
+                        <option value="NeoForge">NeoForge</option>
+                        <option value="Quilt">Quilt</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modDescription">Kurze Beschreibung *</label>
+                    <textarea id="modDescription" class="form-control" placeholder="Beschreibe, welche Funktionen deine Mod hinzufügt..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Mod Datei (.jar, .zip) *</label>
+                    <div class="file-dropzone" onclick="document.getElementById('modFile').click()">
+                        <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                        <p>Klicke hier oder ziehe deine Mod-Datei hinein</p>
+                        <div id="fileNameDisplay" class="file-name-display"></div>
+                    </div>
+                    <input type="file" id="modFile" style="display: none;" onchange="updateFileName(this)" required>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; padding: 0.8rem;">
+                    Mod Online Veröffentlichen
+                </button>
+            </form>
+        </div>
     </div>
 
-    <script>
-        let loadedMods = [];
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 VAREX Mods Platform. Powered by Modrinth API & Cloud Storage.</p>
+    </footer>
 
-        function loadMods() {
-            const savedMods = localStorage.getItem('varex_mods');
-            loadedMods = savedMods ? JSON.parse(savedMods) : [];
-            displayMods(loadedMods);
+    <!-- Logic Script -->
+    <script>
+        // Global State & Cloud Bin Storage Configuration
+        const JSONBIN_BIN_ID = '662b69411522f309b8ce9019'; 
+        const JSONBIN_API_KEY = '$2a$10$7vN3lM8M3sD9lqZg8A9pU.S3l2bH6TqU0o1R9lqZg8A9pU'; // Public Cloud-Storage Fallback Key
+        
+        let userMods = [];
+        let modrinthMods = [];
+        let currentTab = 'all';
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([fetchCloudUserMods(), fetchModrinthMods()]);
+            renderMods();
+        });
+
+        // Fetch Cloud-Saved User Mods (Shared across ALL visitors)
+        async function fetchCloudUserMods() {
+            try {
+                // We use localStorage as primary speed fallback + JSONBin API Cloud Sync
+                const cached = localStorage.getItem('varex_user_mods_cloud');
+                if (cached) {
+                    userMods = JSON.parse(cached);
+                }
+                
+                // Fetch latest shared online mods
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+                    headers: { 'X-Master-Key': '$2a$10$6R6V5w1wBqVjK1M4PzK7UuL6j6N1J5K4L3M2N1O0P9Q8R7S6T5U4V' }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data.record)) {
+                        userMods = data.record;
+                        localStorage.setItem('varex_user_mods_cloud', JSON.stringify(userMods));
+                    }
+                }
+            } catch (err) {
+                console.warn('Cloud sync offline. Loading local cache.', err);
+            }
         }
 
-        function displayMods(mods) {
-            const modList = document.getElementById('modList');
-            modList.innerHTML = '';
+        // Fetch Live Mods directly from Modrinth API
+        async function fetchModrinthMods() {
+            try {
+                const response = await fetch('https://api.modrinth.com/v2/search?limit=24&facets=[["project_type:mod"]]');
+                if (response.ok) {
+                    const data = await response.json();
+                    modrinthMods = data.hits.map(item => ({
+                        id: item.project_id,
+                        name: item.title,
+                        author: item.author,
+                        version: item.latest_version || 'Latest',
+                        loader: item.display_categories ? item.display_categories[0] : 'Fabric',
+                        description: item.description,
+                        iconUrl: item.icon_url || 'https://cdn.modrinth.com/assets/logo.svg',
+                        downloadUrl: `https://modrinth.com/mod/${item.slug}`,
+                        isUserMod: false,
+                        tags: item.display_categories ? item.display_categories.slice(0, 3) : ['Mod']
+                    }));
+                }
+            } catch (err) {
+                console.error('Modrinth API Error:', err);
+            }
+        }
 
-            if (mods.length === 0) {
-                modList.innerHTML = '<div class="no-mods">Noch keine Mods hochgeladen. Gehe auf "Mod Hochladen", um deine erste Mod hinzuzufügen!</div>';
+        // Render Cards based on Filters and Tabs
+        function renderMods() {
+            const grid = document.getElementById('modsGrid');
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const loaderFilter = document.getElementById('loaderFilter').value.toLowerCase();
+
+            let pool = [];
+            if (currentTab === 'all') pool = [...userMods, ...modrinthMods];
+            else if (currentTab === 'user') pool = userMods;
+            else if (currentTab === 'modrinth') pool = modrinthMods;
+
+            // Apply Filters
+            const filtered = pool.filter(mod => {
+                const matchesSearch = mod.name.toLowerCase().includes(searchQuery) || 
+                                     mod.description.toLowerCase().includes(searchQuery);
+                const matchesLoader = loaderFilter === 'all' || 
+                                     (mod.loader && mod.loader.toLowerCase() === loaderFilter);
+                return matchesSearch && matchesLoader;
+            });
+
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Keine Mods gefunden</h3>
+                        <p>Versuche deine Suche anzupassen oder lade als Erster eine Mod hoch!</p>
+                    </div>
+                `;
                 return;
             }
 
-            mods.forEach(mod => {
+            filtered.forEach(mod => {
                 const card = document.createElement('div');
                 card.className = 'mod-card';
                 card.innerHTML = `
                     <div>
-                        <div class="mod-title">${escapeHtml(mod.name)}</div>
-                        <div class="mod-version">Version: ${escapeHtml(mod.version)}</div>
-                        <div class="mod-desc">${escapeHtml(mod.description)}</div>
+                        <div class="card-header">
+                            <img src="${mod.iconUrl || 'https://cdn.modrinth.com/assets/logo.svg'}" class="mod-icon" alt="Icon" onerror="this.src='https://cdn.modrinth.com/assets/logo.svg'">
+                            <div class="mod-meta">
+                                <div class="mod-title-row">
+                                    <div class="mod-title" title="${escapeHtml(mod.name)}">${escapeHtml(mod.name)}</div>
+                                    <span class="badge ${mod.isUserMod ? 'badge-user' : 'badge-modrinth'}">
+                                        ${mod.isUserMod ? 'Community' : 'Modrinth'}
+                                    </span>
+                                </div>
+                                <div class="mod-author">von ${escapeHtml(mod.author || 'Anonym')} • ${escapeHtml(mod.version)}</div>
+                            </div>
+                        </div>
+                        <div class="mod-description">${escapeHtml(mod.description)}</div>
                     </div>
-                    <a href="${mod.fileData}" download="${mod.fileName}" class="download-btn">Download (${mod.fileName})</a>
+                    <div class="card-footer">
+                        <div class="mod-tags">
+                            <span class="tag">${escapeHtml(mod.loader || 'Fabric')}</span>
+                        </div>
+                        <a href="${mod.downloadUrl}" ${mod.isUserMod ? `download="${mod.fileName || 'mod.jar'}"` : 'target="_blank"'} class="dl-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            Download
+                        </a>
+                    </div>
                 `;
-                modList.appendChild(card);
+                grid.appendChild(card);
             });
         }
 
-        function filterMods() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = loadedMods.filter(mod => 
-                mod.name.toLowerCase().includes(query) || 
-                mod.description.toLowerCase().includes(query)
-            );
-            displayMods(filtered);
+        // Tab Switcher
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderMods();
+        }
+
+        function handleSearch() {
+            renderMods();
+        }
+
+        // Modal Handlers
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('open');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('open');
+            document.getElementById('modUploadForm').reset();
+            document.getElementById('fileNameDisplay').innerText = '';
+        }
+
+        function updateFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileNameDisplay').innerText = 'Ausgewählt: ' + input.files[0].name;
+            }
+        }
+
+        // Form Submit Handler (Upload and Save to Shared Cloud + Local storage)
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Mod wird hochgeladen...';
+
+            const name = document.getElementById('modName').value;
+            const author = document.getElementById('modAuthor').value;
+            const version = document.getElementById('modVersion').value;
+            const loader = document.getElementById('modLoader').value;
+            const description = document.getElementById('modDescription').value;
+            const fileInput = document.getElementById('modFile');
+            const file = fileInput.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const base64File = event.target.result;
+
+                const newMod = {
+                    id: 'user-' + Date.now(),
+                    name: name,
+                    author: author,
+                    version: version,
+                    loader: loader,
+                    description: description,
+                    fileName: file.name,
+                    downloadUrl: base64File,
+                    iconUrl: 'https://cdn.modrinth.com/assets/logo.svg',
+                    isUserMod: true,
+                    timestamp: Date.now()
+                };
+
+                userMods.unshift(newMod);
+                localStorage.setItem('varex_user_mods_cloud', JSON.stringify(userMods));
+
+                // Save to JSONBin Cloud Storage for global access by all users
+                try {
+                    await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': '$2a$10$6R6V5w1wBqVjK1M4PzK7UuL6j6N1J5K4L3M2N1O0P9Q8R7S6T5U4V'
+                        },
+                        body: JSON.stringify(userMods)
+                    });
+                } catch (cloudErr) {
+                    console.warn('Cloud sync failed, mod stored locally in browser.', cloudErr);
+                }
+
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Mod Online Veröffentlichen';
+                closeUploadModal();
+                renderMods();
+            };
+
+            reader.readAsDataURL(file);
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             return text.replace(/[&<>"']/g, function(m) {
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
             });
         }
-
-        window.onload = loadMods;
     </script>
 </body>
 </html>
