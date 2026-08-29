@@ -3,350 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod Hochladen - VAREX MODS</title>
+    <title>Mod Hochladen - VAREX Mods</title>
     <style>
-        :root {
-            --bg-color: #0b0d12;
-            --card-bg: #141722;
-            --accent-cyan: #00d2ff;
-            --accent-purple: #9d4edd;
-            --gradient-accent: linear-gradient(135deg, #00d2ff, #9d4edd);
-            --text-main: #e2e8f0;
-            --text-muted: #8e9aaf;
-            --border-color: #202638;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-family);
-            line-height: 1.5;
-            min-height: 100vh;
+            background-color: #121214;
+            color: #e1e1e6;
+            padding: 20px;
         }
 
-        /* Navigation Bar */
         header {
-            background-color: rgba(20, 23, 34, 0.85);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 0.8rem 2rem;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #29292e;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-accent);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            color: #0b0d12;
-            font-size: 1.1rem;
+        h1 {
+            color: #00875f;
         }
 
         nav a {
-            color: var(--text-muted);
+            color: #e1e1e6;
             text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.2s;
+            margin-left: 15px;
+            padding: 8px 16px;
+            background-color: #202024;
+            border-radius: 6px;
+            transition: 0.2s;
         }
 
-        nav a:hover {
-            color: var(--accent-cyan);
+        nav a:hover, nav a.active {
+            background-color: #00875f;
+            color: #fff;
         }
 
-        /* Upload Container */
-        .upload-container {
-            max-width: 650px;
-            margin: 3rem auto;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .upload-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: var(--gradient-accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .upload-subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #202024;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #29292e;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-main);
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
-        input[type="text"], textarea, select {
+        input[type="text"], textarea, input[type="file"] {
             width: 100%;
-            padding: 0.85rem;
-            background-color: #0b0d12;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #29292e;
+            background-color: #121214;
+            color: #fff;
+            font-size: 14px;
         }
 
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: var(--accent-cyan);
+        textarea {
+            resize: vertical;
+            min-height: 100px;
         }
 
-        .file-input-wrapper {
-            background-color: #0b0d12;
-            border: 2px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .file-input-wrapper:hover {
-            border-color: var(--accent-purple);
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .file-label {
-            color: var(--accent-cyan);
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .file-name-display {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        .btn-submit {
+        button {
             width: 100%;
-            padding: 1rem;
-            background: var(--gradient-accent);
-            color: #0b0d12;
-            font-weight: 800;
-            font-size: 1rem;
+            background-color: #00875f;
+            color: #fff;
+            padding: 12px;
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            margin-top: 1rem;
+            transition: background 0.2s;
         }
 
-        .btn-submit:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
+        button:hover {
+            background-color: #00b37e;
         }
 
-        .alert-success {
-            background-color: rgba(0, 210, 255, 0.15);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
             display: none;
+        }
+
+        .success {
+            background-color: #123825;
+            color: #00b37e;
+            border: 1px solid #00875f;
+        }
+
+        .clear-btn {
+            background-color: #a83232;
+            margin-top: 20px;
+        }
+
+        .clear-btn:hover {
+            background-color: #c94444;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">
-            <div class="logo-icon">V</div>
-            VAREX MODS
-        </a>
+        <h1>VAREX Mods</h1>
         <nav>
-            <a href="index.html">← Zurück zur Übersicht</a>
+            <a href="index.html">Downloads</a>
+            <a href="about.html" class="active">Mod Hochladen</a>
         </nav>
     </header>
 
-    <div class="upload-container">
-        <h2 class="upload-title">Neue Mod Hochladen</h2>
-        <p class="upload-subtitle">Füge deine Fabric Mod für Minecraft Versionen bis 1.21.11 hinzu.</p>
-
-        <div id="successAlert" class="alert-success">
-            Mod erfolgreich hochgeladen! Du wirst zur Hauptseite weitergeleitet...
-        </div>
-
+    <div class="container">
+        <h2>Neue Mod hochladen</h2>
+        <br>
         <form id="uploadForm">
             <div class="form-group">
-                <label for="modTitle">Mod Name</label>
-                <input type="text" id="modTitle" placeholder="z. B. Varex Spider-Man Mod" required>
+                <label for="modName">Mod Name</label>
+                <input type="text" id="modName" required placeholder="z. B. Spiderman Fabric Mod">
             </div>
 
             <div class="form-group">
-                <label for="modDescription">Beschreibung</label>
-                <textarea id="modDescription" rows="4" placeholder="Beschreibe die Funktionen und Features deiner Mod..." required></textarea>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="modLoader">Mod Loader</label>
-                    <select id="modLoader" required>
-                        <option value="Fabric" selected>Fabric</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="modVersion">Minecraft Version</label>
-                    <select id="modVersion" required>
-                        <option value="1.21.11">1.21.11</option>
-                        <option value="1.21.10">1.21.10</option>
-                        <option value="1.21.9">1.21.9</option>
-                        <option value="1.21.8">1.21.8</option>
-                        <option value="1.21.7">1.21.7</option>
-                        <option value="1.21.6">1.21.6</option>
-                        <option value="1.21.5">1.21.5</option>
-                        <option value="1.21.4">1.21.4</option>
-                        <option value="1.21.3">1.21.3</option>
-                        <option value="1.21.2">1.21.2</option>
-                        <option value="1.21.1">1.21.1</option>
-                        <option value="1.21">1.21</option>
-                        <option value="1.20.6">1.20.6</option>
-                        <option value="1.20.4">1.20.4</option>
-                        <option value="1.20.2">1.20.2</option>
-                        <option value="1.20.1">1.20.1</option>
-                        <option value="1.20">1.20</option>
-                    </select>
-                </div>
+                <label for="modVersion">Minecraft Version / Mod Version</label>
+                <input type="text" id="modVersion" required placeholder="z. B. 1.21.8 / v1.0">
             </div>
 
             <div class="form-group">
-                <label>Mod Vorschau-Bild</label>
-                <div class="file-input-wrapper" onclick="document.getElementById('imageFileInput').click()">
-                    <span class="file-label">📷 Bild auswählen</span>
-                    <input type="file" id="imageFileInput" accept="image/*">
-                    <div id="imageName" class="file-name-display">Kein Bild ausgewählt (Standardsymbol wird genutzt)</div>
-                </div>
+                <label for="modDesc">Beschreibung</label>
+                <textarea id="modDesc" required placeholder="Beschreibe, was die Mod macht..."></textarea>
             </div>
 
             <div class="form-group">
-                <label>Mod Datei (.jar)</label>
-                <div class="file-input-wrapper" onclick="document.getElementById('jarFileInput').click()">
-                    <span class="file-label">📦 .jar Datei auswählen</span>
-                    <input type="file" id="jarFileInput" accept=".jar" required>
-                    <div id="jarName" class="file-name-display">Keine Datei ausgewählt</div>
-                </div>
+                <label for="modFile">Mod Datei (.jar, .zip, etc.)</label>
+                <input type="file" id="modFile" required>
             </div>
 
-            <button type="submit" class="btn-submit">Mod Veröffentlichen</button>
+            <button type="submit">Mod Speichern & Veröffentlichen</button>
         </form>
+
+        <div id="statusMessage" class="message success">Mod erfolgreich gespeichert! Sie wird jetzt unter Downloads angezeigt.</div>
+
+        <button class="clear-btn" onclick="clearAllMods()">Alle gespeicherten Mods löschen</button>
     </div>
 
     <script>
-        let uploadedImageData = "";
-        let uploadedFileData = "#";
-        let uploadedFileName = "mod.jar";
-
-        document.getElementById('imageFileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                document.getElementById('imageName').innerText = file.name;
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    uploadedImageData = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.getElementById('jarFileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                document.getElementById('jarName').innerText = file.name;
-                uploadedFileName = file.name;
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    uploadedFileData = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
         document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const title = document.getElementById('modTitle').value;
-            const description = document.getElementById('modDescription').value;
-            const loader = document.getElementById('modLoader').value;
+            const name = document.getElementById('modName').value;
             const version = document.getElementById('modVersion').value;
+            const description = document.getElementById('modDesc').value;
+            const fileInput = document.getElementById('modFile');
+            const file = fileInput.files[0];
 
-            const newMod = {
-                id: Date.now(),
-                title: title,
-                description: description,
-                loader: loader,
-                version: version,
-                image: uploadedImageData || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
-                fileUrl: uploadedFileData,
-                fileName: uploadedFileName
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const fileData = event.target.result; // Base64 kodierte Datei
+
+                const newMod = {
+                    id: Date.now(),
+                    name: name,
+                    version: version,
+                    description: description,
+                    fileName: file.name,
+                    fileData: fileData
+                };
+
+                // Vorhandene Mods aus localStorage laden
+                const existingMods = JSON.parse(localStorage.getItem('varex_mods')) || [];
+                existingMods.push(newMod);
+
+                // Im localStorage speichern
+                try {
+                    localStorage.setItem('varex_mods', JSON.stringify(existingMods));
+                    
+                    // Erfolgsmeldung
+                    const msg = document.getElementById('statusMessage');
+                    msg.style.display = 'block';
+                    document.getElementById('uploadForm').reset();
+                    
+                    setTimeout(() => { msg.style.display = 'none'; }, 4000);
+                } catch (err) {
+                    alert('Fehler: Die Datei ist zu groß für den lokalen Browser-Speicher!');
+                }
             };
 
-            const existingMods = JSON.parse(localStorage.getItem('varex_mods')) || [];
-            existingMods.unshift(newMod);
-            localStorage.setItem('varex_mods', JSON.stringify(existingMods));
-
-            document.getElementById('successAlert').style.display = 'block';
-
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1500);
+            reader.readAsDataURL(file);
         });
+
+        function clearAllMods() {
+            if (confirm('Möchtest du wirklich alle hochgeladenen Mods aus dem Speicher löschen?')) {
+                localStorage.removeItem('varex_mods');
+                alert('Alle Mods wurden gelöscht.');
+            }
+        }
     </script>
 </body>
 </html>
