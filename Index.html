@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varex Mods - Modrinth Style</title>
+    <style>
+        :root {
+            --bg-color: #0b0d12;
+            --card-bg: #141722;
+            --card-hover: #1b2030;
+            --accent-cyan: #00d2ff;
+            --accent-purple: #9d4edd;
+            --accent-purple-hover: #b565f0;
+            --gradient-accent: linear-gradient(135deg, #00d2ff, #9d4edd);
+            --text-main: #e2e8f0;
+            --text-muted: #8e9aaf;
+            --border-color: #202638;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: rgba(20, 23, 34, 0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #0b0d12;
+            font-size: 1.1rem;
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-cyan);
+        }
+
+        .btn-upload-nav {
+            background: var(--gradient-accent);
+            color: #0b0d12;
+            font-weight: 700;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn-upload-nav:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 900px;
+            margin: 3.5rem auto 2rem auto;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-cyan) 70%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Controls / Search & Filters */
+        .controls-container {
+            max-width: 1100px;
+            margin: 0 auto 2.5rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 280px;
+            padding: 0.85rem 1.2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        .filter-select {
+            padding: 0.85rem 1.2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: var(--accent-purple);
+        }
+
+        /* Grid & Cards */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            background-color: var(--card-hover);
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 210, 255, 0.15);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background-color: #0b0d12;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: rgba(157, 78, 221, 0.15);
+            color: #d8b4fe;
+            border: 1px solid rgba(157, 78, 221, 0.3);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .tag-loader {
+            background-color: rgba(0, 210, 255, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-download {
+            background-color: var(--accent-purple);
+            color: #fff;
+            padding: 0.45rem 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: background-color 0.2s;
+        }
+
+        .btn-download:hover {
+            background-color: var(--accent-purple-hover);
+        }
+
+        .no-mods {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 3rem 0;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">V</div>
+            VAREX MODS
+        </a>
+        <nav>
+            <a href="index.html" class="active">Mods</a>
+            <a href="upload.html" class="btn-upload-nav">+ Mod Hochladen</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Exklusive Minecraft Fabric Mods</h1>
+        <p>Entdecke benutzerdefinierte Minecraft Mods von VAREX für Fabric bis Version 1.21.11.</p>
+    </section>
+
+    <div class="controls-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Suche nach Mods...">
+        <select id="versionFilter" class="filter-select">
+            <option value="all">Alle Versionen</option>
+            <option value="1.21.11">1.21.11</option>
+            <option value="1.21.10">1.21.10</option>
+            <option value="1.21.9">1.21.9</option>
+            <option value="1.21.8">1.21.8</option>
+            <option value="1.21.4">1.21.4</option>
+            <option value="1.21">1.21</option>
+            <option value="1.20.6">1.20.6</option>
+            <option value="1.20.1">1.20.1</option>
+        </select>
+    </div>
+
+    <main class="container">
+        <div class="grid" id="modsGrid">
+            <!-- Dynamisch via JavaScript geladene Mods -->
+        </div>
+    </main>
+
+    <script>
+        const defaultMods = [
+            {
+                id: 1,
+                title: "Varex Spider-Man Mechanics",
+                description: "Fügt fortgeschrittene Rope-Swinging und Web-Shooting Mechaniken in Minecraft 1.21.8 ein.",
+                loader: "Fabric",
+                version: "1.21.8",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+                fileUrl: "#"
+            },
+            {
+                id: 2,
+                title: "Vulcan Core Utilities",
+                description: "Leistungsstarke Performance-Optimierungen und Grafik-Tweaks für Fabric Server und Clients.",
+                loader: "Fabric",
+                version: "1.21.11",
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&q=80",
+                fileUrl: "#"
+            }
+        ];
+
+        function getMods() {
+            const stored = localStorage.getItem('varex_mods');
+            if (!stored) {
+                localStorage.setItem('varex_mods', JSON.stringify(defaultMods));
+                return defaultMods;
+            }
+            return JSON.parse(stored);
+        }
+
+        function renderMods() {
+            const mods = getMods();
+            const grid = document.getElementById('modsGrid');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const versionVal = document.getElementById('versionFilter').value;
+
+            const filtered = mods.filter(mod => {
+                const matchesSearch = mod.title.toLowerCase().includes(searchVal) || mod.description.toLowerCase().includes(searchVal);
+                const matchesVersion = versionVal === 'all' || mod.version === versionVal;
+                return matchesSearch && matchesVersion;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="no-mods">Keine Mods gefunden. <a href="upload.html" style="color:var(--accent-cyan);">Lade die erste Mod hoch!</a></div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(mod => `
+                <div class="card">
+                    <div>
+                        <img src="${mod.image || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80'}" alt="${mod.title}" class="card-img">
+                        <div class="card-header">
+                            <div class="card-title">${mod.title}</div>
+                        </div>
+                        <p class="card-description">${mod.description}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="tag tag-loader">${mod.loader}</span>
+                            <span class="tag">${mod.version}</span>
+                        </div>
+                        <a href="${mod.fileUrl}" download="${mod.fileName || 'mod.jar'}" class="btn-download">Download</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('searchInput').addEventListener('input', renderMods);
+        document.getElementById('versionFilter').addEventListener('change', renderMods);
+
+        renderMods();
+    </script>
+</body>
+</html>
