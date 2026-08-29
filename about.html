@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mod Hochladen - VAREX MODS</title>
+    <style>
+        :root {
+            --bg-color: #0b0d12;
+            --card-bg: #141722;
+            --accent-cyan: #00d2ff;
+            --accent-purple: #9d4edd;
+            --gradient-accent: linear-gradient(135deg, #00d2ff, #9d4edd);
+            --text-main: #e2e8f0;
+            --text-muted: #8e9aaf;
+            --border-color: #202638;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: rgba(20, 23, 34, 0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #0b0d12;
+            font-size: 1.1rem;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Upload Container */
+        .upload-container {
+            max-width: 650px;
+            margin: 3rem auto;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .upload-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .upload-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #0b0d12;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .file-input-wrapper {
+            background-color: #0b0d12;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: var(--accent-purple);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .file-name-display {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-accent);
+            color: #0b0d12;
+            font-weight: 800;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        .alert-success {
+            background-color: rgba(0, 210, 255, 0.15);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">V</div>
+            VAREX MODS
+        </a>
+        <nav>
+            <a href="index.html">← Zurück zur Übersicht</a>
+        </nav>
+    </header>
+
+    <div class="upload-container">
+        <h2 class="upload-title">Neue Mod Hochladen</h2>
+        <p class="upload-subtitle">Füge deine Fabric Mod für Minecraft Versionen bis 1.21.11 hinzu.</p>
+
+        <div id="successAlert" class="alert-success">
+            Mod erfolgreich hochgeladen! Du wirst zur Hauptseite weitergeleitet...
+        </div>
+
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="modTitle">Mod Name</label>
+                <input type="text" id="modTitle" placeholder="z. B. Varex Spider-Man Mod" required>
+            </div>
+
+            <div class="form-group">
+                <label for="modDescription">Beschreibung</label>
+                <textarea id="modDescription" rows="4" placeholder="Beschreibe die Funktionen und Features deiner Mod..." required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="modLoader">Mod Loader</label>
+                    <select id="modLoader" required>
+                        <option value="Fabric" selected>Fabric</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modVersion">Minecraft Version</label>
+                    <select id="modVersion" required>
+                        <option value="1.21.11">1.21.11</option>
+                        <option value="1.21.10">1.21.10</option>
+                        <option value="1.21.9">1.21.9</option>
+                        <option value="1.21.8">1.21.8</option>
+                        <option value="1.21.7">1.21.7</option>
+                        <option value="1.21.6">1.21.6</option>
+                        <option value="1.21.5">1.21.5</option>
+                        <option value="1.21.4">1.21.4</option>
+                        <option value="1.21.3">1.21.3</option>
+                        <option value="1.21.2">1.21.2</option>
+                        <option value="1.21.1">1.21.1</option>
+                        <option value="1.21">1.21</option>
+                        <option value="1.20.6">1.20.6</option>
+                        <option value="1.20.4">1.20.4</option>
+                        <option value="1.20.2">1.20.2</option>
+                        <option value="1.20.1">1.20.1</option>
+                        <option value="1.20">1.20</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Mod Vorschau-Bild</label>
+                <div class="file-input-wrapper" onclick="document.getElementById('imageFileInput').click()">
+                    <span class="file-label">📷 Bild auswählen</span>
+                    <input type="file" id="imageFileInput" accept="image/*">
+                    <div id="imageName" class="file-name-display">Kein Bild ausgewählt (Standardsymbol wird genutzt)</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Mod Datei (.jar)</label>
+                <div class="file-input-wrapper" onclick="document.getElementById('jarFileInput').click()">
+                    <span class="file-label">📦 .jar Datei auswählen</span>
+                    <input type="file" id="jarFileInput" accept=".jar" required>
+                    <div id="jarName" class="file-name-display">Keine Datei ausgewählt</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Mod Veröffentlichen</button>
+        </form>
+    </div>
+
+    <script>
+        let uploadedImageData = "";
+        let uploadedFileData = "#";
+        let uploadedFileName = "mod.jar";
+
+        document.getElementById('imageFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('imageName').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    uploadedImageData = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('jarFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('jarName').innerText = file.name;
+                uploadedFileName = file.name;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    uploadedFileData = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('modTitle').value;
+            const description = document.getElementById('modDescription').value;
+            const loader = document.getElementById('modLoader').value;
+            const version = document.getElementById('modVersion').value;
+
+            const newMod = {
+                id: Date.now(),
+                title: title,
+                description: description,
+                loader: loader,
+                version: version,
+                image: uploadedImageData || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+                fileUrl: uploadedFileData,
+                fileName: uploadedFileName
+            };
+
+            const existingMods = JSON.parse(localStorage.getItem('varex_mods')) || [];
+            existingMods.unshift(newMod);
+            localStorage.setItem('varex_mods', JSON.stringify(existingMods));
+
+            document.getElementById('successAlert').style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
